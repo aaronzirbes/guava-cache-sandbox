@@ -13,7 +13,7 @@ class WoodChuckSpec extends Specification {
     void 'how much wood could a wood chuck chuck'() {
         given: 'a wood chuck than can chuck wood'
         WoodChuck woodChuck = new WoodChuck(canChuckWood: true)
-        ChuckingService chuckingService = new ChuckingService(chuckingApiService: chuckingApiService)
+        ChuckingService chuckingService = new ChuckingService(chuckingApiService)
 
         and: 'an incoming barage of request as to how much wood can said wood chuck chuck'
         List<WoodType> checkTypeQueue = [
@@ -44,8 +44,9 @@ class WoodChuckSpec extends Specification {
             chuckingService.chuck(woodChuck, woodType)
         }
 
-        then: 'we hit the ChuckingApiService quite a few times'
-        20 * chuckingApiService.chuck(_) >> 42
+        then: 'we hit the ChuckingApiService 13 less times since we are using a cache'
+        //20 * chuckingApiService.chuck(_) >> 42
+        7 * chuckingApiService.chuck(_) >> 42
         
     }
 }
